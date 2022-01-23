@@ -1,6 +1,6 @@
 # Node Telegram API Integration
 
-This is a example of a service integrated with TDLib and Telegram Bot API to make Telegram groups programatically.
+Example of a service integrated with TDLib and Telegram Bot API to make Telegram actions programatically.
 
 ## Functionality
 
@@ -16,7 +16,7 @@ You have to create a bot with BotFather and get your API credentials here https:
 
 ### Environment
 
-To have complete functionality you should do the following:
+You'll need to build a custom Docker image to be able to use TDLib. Do the following:
 
 ```
 cd devenv
