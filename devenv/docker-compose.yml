@@ -1,0 +1,30 @@
+version: '3'
+services:
+    api:
+        restart: unless-stopped
+        image: node-td
+        container_name: api
+        ports:
+            - 8080:8080
+        volumes:
+            - ..:/home/app
+        command: tail -f /dev/null
+        networks:
+            - devnet
+    db:
+        image: postgres:9.6
+        container_name: db
+        ports:
+            - 5432:5432
+        volumes:
+            - ../../postgresdata:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_DB=development_db
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+        networks:
+            - devnet
+
+networks:
+    devnet:
+        driver: bridge

@@ -1,0 +1,6 @@
+_td_database
+_td_files
+devenv/postgresdata
+node_modules
+dist
+.env

@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+    api:
+        restart: unless-stopped
+        image: node-td
+        container_name: backend_api_1
+        volumes:
+            - .:/home/app
+        command: [sh, -c, 'yarn install && yarn knex migrate:latest && yarn start']
+        networks:
+            - db
+            - web
+        environment:
+            - NODE_ENV
+            - MODE
+            - PRO_DB
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.api-router.rule=Host(`<api-domain>`)
+            - traefik.http.routers.api-router.service=api-service
+            - traefik.http.routers.api-router.entrypoints=websecure
+            - traefik.http.routers.api-router.tls=true
+            - traefik.http.routers.api-router.tls.certResolver=lets-encrypt
+            - traefik.http.services.api-service.loadbalancer.server.port=8080
+            - 'traefik.http.middlewares.api-headers.headers.accesscontrolalloworiginlist=<my-frontend-app-domain>,<my-other-frontend-app-domain>'
+            - traefik.http.routers.api-router.middlewares=api-headers@docker
+
+networks:
+    db:
+        external: true
+    web:
+        external: true
